@@ -90,5 +90,5 @@ spec:
   serviceRef:
     name: demo-app
     port: 80
-  targetGroupARN: ${TG_ARN}
+  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:816600798829:targetgroup/roboshop-dev-frontend/393161268722a7d4
   targetType: ip
