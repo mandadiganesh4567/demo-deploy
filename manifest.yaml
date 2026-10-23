@@ -1,4 +1,4 @@
-piVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-app
@@ -28,7 +28,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: demo-app
-          image: IMAGE_PLACEHOLDER   # e.g. 816600798829.dkr.ecr.us-east-1.amazonaws.com/ganesh/docker:<sha>
+          image: 816600798829.dkr.ecr.us-east-1.amazonaws.com/ganesh/docker:1.0.0   # e.g. 816600798829.dkr.ecr.us-east-1.amazonaws.com/ganesh/docker:<sha>
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
