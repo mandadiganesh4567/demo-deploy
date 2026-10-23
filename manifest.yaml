@@ -1,0 +1,82 @@
+piVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  namespace: demo-app
+  labels:
+    app: demo-app
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: demo-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0          # never drop below desired capacity during rollout
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000          # the "node" user in node:alpine images
+        runAsGroup: 1000
+      containers:
+        - name: demo-app
+          image: IMAGE_PLACEHOLDER   # e.g. 816600798829.dkr.ecr.us-east-1.amazonaws.com/ganesh/docker:<sha>
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: demo-app-config
+          # Secrets (create separately, never commit values):
+          # env:
+          #   - name: DB_PASSWORD
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: demo-app-secret
+          #         key: DB_PASSWORD
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 256Mi        # memory limit yes; CPU limit often omitted to avoid throttling
+          startupProbe:            # gives slow starts time before liveness kicks in
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 5
+            failureThreshold: 12   # up to 60s to start
+          readinessProbe:          # "should I receive traffic?"
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          livenessProbe:           # "should I be restarted?"
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sleep", "5"]   # let the ALB deregister before the pod dies
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+
