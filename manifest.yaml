@@ -80,3 +80,15 @@ spec:
             capabilities:
               drop: ["ALL"]
 
+---
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: demo-app-frontend
+  namespace: demo-app
+spec:
+  serviceRef:
+    name: demo-app
+    port: 80
+  targetGroupARN: ${TG_ARN}
+  targetType: ip
