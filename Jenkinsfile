@@ -19,9 +19,11 @@ pipeline {
                             echo "=== Check EKS access ==="
                             kubectl get pods -n demo-app
 
+                        
                             helm upgrade --install demo-app ./Charts \
                                 -f ./Charts/values.yaml \
                                 --namespace demo-app \
+                                --take-ownership \
                                 --wait \
                                 --timeout=5m
                         '''
