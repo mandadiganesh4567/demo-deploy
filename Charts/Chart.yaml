@@ -1,4 +1,6 @@
-apiVersion: 
-name: 
-version: 
-description: A single-sentence description of this project (optional)
+apiVersion: V2
+name: demo-app
+version: 0.1.0
+apiVersion: "1.0.0"
+type: application
+description: Helm chart for demo-app Nodejs

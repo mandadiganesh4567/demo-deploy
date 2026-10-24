@@ -6,7 +6,7 @@ metadata:
   labels:
     app: demo-app
 spec:
-  replicas: {{ Values.Deployment.replica_count }}
+  replicas: {{ .Values.deployment.replicaCount }}
   revisionHistoryLimit: 5
   selector:
     matchLabels:
@@ -28,7 +28,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: demo-app
-          image: {{ Values.Deployment.IMAGE_VERSION }}   # e.g. 816600798829.dkr.ecr.us-east-1.amazonaws.com/ganesh/docker:<sha>
+          image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"   # e.g. 816600798829.dkr.ecr.us-east-1.amazonaws.com/ganesh/docker:<sha>
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
