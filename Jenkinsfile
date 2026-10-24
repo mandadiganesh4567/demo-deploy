@@ -16,11 +16,10 @@ pipeline {
                             kubectl get nodes
 
                             helm upgrade --install demo-app ./Charts \
-                                -f ./Charts/values.yaml \
-                                --namespace demo-app \
-                                --set-string deployment.image.tag=${appVersion} \
-                                --atomic --wait \
-                                --timeout=5m
+                            -f ./Charts/values.yaml \
+                            --namespace demo-app \
+                            --atomic--wait \
+                            --timeout=5m
                         """
                     }
                 }
