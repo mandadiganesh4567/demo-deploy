@@ -1,0 +1,4 @@
+Deployment:
+  IMAGE_VERSION : 816600798829.dkr.ecr.us-east-1.amazonaws.com/ganesh/docker:1.0.0
+  PORT : 3000
+  replica_count : 2
