@@ -1,4 +1,4 @@
-apiVersion: V2
+apiVersion: v2
 name: demo-app
 description: Helm chart for demo-app Nodejs
 version: 0.1.0
