@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     withAWS(region: 'us-east-1', credentials: 'aws-creds') {
-                        sh """
+                        sh '''
                             echo "=== Jenkins agent ==="
                             hostname
                             ip -4 route get 10.0.11.100
@@ -34,7 +34,7 @@ pipeline {
                             --namespace demo-app \
                             --atomic--wait \
                             --timeout=5m
-                        """
+                        '''
                     }
                 }
             }
