@@ -1,6 +1,5 @@
 apiVersion: V2
 name: demo-app
-version: 0.1.0
-apiVersion: "1.0.0"
-type: application
 description: Helm chart for demo-app Nodejs
+version: 0.1.0
+appVersion: "1.0.0"
