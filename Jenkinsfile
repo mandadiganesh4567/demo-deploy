@@ -17,7 +17,7 @@ pipeline {
                             aws sts get-caller-identity
 
                             echo "=== Check EKS access ==="
-                            kubectl get nodes
+                            kubectl get pods -n demo-app
 
                             helm upgrade --install demo-app ./Charts \
                                 -f ./Charts/values.yaml \
